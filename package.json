@@ -1,0 +1,29 @@
+{
+  "name": "cache",
+  "namespace": "",
+  "main": "./",
+  "version": "v0.16.1110",
+  "description": "Cache provider for LabShare",
+  "private": true,
+  "contributors": "https://github.com/LabShare/cache/graphs/contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LabShare/cache.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LabShare/cache/issues"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "flat": "^2.0.1",
+    "lodash": "^4.16.6",
+    "redis": "^2.6.3"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2",
+    "supertest": "^2.0.1"
+  },
+  "scripts": {
+    "test": "jasmine test/cache-spec.js"
+  }
+}
