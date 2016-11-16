@@ -14,6 +14,10 @@ error :function (error)
 };
 //connection settings for redis client
 const redisOptions = {
+configuration: 
+{
+    maxTime:null    
+},
 connection : baseConnection,
 logger:logger
 };
@@ -35,8 +39,8 @@ afterEach(function() {
   });
 
 it('It will test the storage of a string', function(done) {
-
-    cacheClient.saveCache(['test-string'],20,(error,data)=>
+    
+    cacheClient.save(['test-string'],20,(error,data)=>
     {
         expect(error).toBeNull();
         done();
@@ -46,7 +50,7 @@ it('It will test the storage of a string', function(done) {
 });
 it('It will test the retreival of a string', function(done) {
 
-    cacheClient.getCache(['test-string'],(error,data)=>
+    cacheClient.get(['test-string'],(error,data)=>
     {
         expect(data).toEqual(20);
         done();
@@ -55,7 +59,7 @@ it('It will test the retreival of a string', function(done) {
 
 });
 it('It will test the deletion of the cache', function(done) {
-    cacheClient.deleteCache (['test-string'],(error,data)=>
+    cacheClient.delete(['test-string'],(error,data)=>
     {
         expect(error).toBeNull();
         done();
@@ -65,7 +69,7 @@ it('It will test the deletion of the cache', function(done) {
 });
 it('It will test the retreival of a non-existence string', function(done) {
 
-    cacheClient.getCache(['test-string'],(error,data)=>
+    cacheClient.get(['test-string'],(error,data)=>
     {
          expect(data).toBeNull();
         done();
@@ -75,7 +79,7 @@ it('It will test the retreival of a non-existence string', function(done) {
 });
 
 it('It will test the storage of an object', function(done) {
-    cacheClient.saveObjectCache(['test-object'],{name:'test',age:20 },(error,data)=>
+    cacheClient.saveObject(['test-object'],{name:'test',age:20 },(error,data)=>
     {
         expect(error).toBeNull();
         done();
@@ -84,7 +88,7 @@ it('It will test the storage of an object', function(done) {
 
 });
 it('It will test the retreival of an object', function(done) {
-    cacheClient.getObjectCache(['test-object'],(error,data)=>
+    cacheClient.getObject(['test-object'],(error,data)=>
     {
         expect(data).toEqual({name:'test',age:20 });
         done();
@@ -93,12 +97,31 @@ it('It will test the retreival of an object', function(done) {
 
 });
 
-xit('It will test the storage of an array', function(done) {
+it('It will test the storage of an array', function(done) {
 
+    let data = [
+        {id:1, name:'test 1', age:35},
+        {id:1, name:'test 2', age:25},
+        {id:1, name:'test 3', age:15}
+    ];
+    cacheClient.deepSaveObject(['User','1'],data,undefined,(error,data)=>
+    {
+      
+        expect(error).toBeNull();
+        done();
+
+    });
 })
 
 
-xit('It will test the storage of an object with expiracy', function(done) {
+it('It will test the retreival of an stored array', function(done) {
+     cacheClient.getAllObjects(['User','1'],(error,data)=>
+    {
+        console.log(data);
+        expect(error).toBeNull();
+        done();
+
+    });
 
 })
 
