@@ -71,7 +71,7 @@ it('It will test the retreival of a non-existence string', function(done) {
 
     cacheClient.get(['test-string'],(error,data)=>
     {
-         expect(data).toBeNull();
+        expect(data).toBeNull();
         done();
 
     });
@@ -90,7 +90,7 @@ it('It will test the storage of an object', function(done) {
 it('It will test the retreival of an object', function(done) {
     cacheClient.getObject(['test-object'],(error,data)=>
     {
-        expect(data).toEqual({name:'test',age:20 });
+        expect(data).not.toBeNull();
         done();
 
     });
@@ -112,15 +112,24 @@ it('It will test the storage of an array', function(done) {
 
     });
 })
-
-
 it('It will test the retreival of an stored array', function(done) {
      cacheClient.getAllObjects(['User','1'],(error,data)=>
     {
-        console.log(data);
         expect(error).toBeNull();
         done();
 
+    });
+
+})
+it('It will delete stored array', function(done) {
+    cacheClient.deleteAll(['User','1'],(error,data)=>
+    {
+        cacheClient.getAllObjects(['User','1'],(error,data)=>
+        {
+           expect(data.length).toBe(0);
+           done();
+
+        });
     });
 
 })
